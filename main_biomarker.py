@@ -18,5 +18,9 @@ if __name__ == "__main__":
         featimp_list = cal_feat_imp(data_folder, os.path.join(model_folder, str(rep+1)), 
                                     view_list, num_class)
         featimp_list_list.append(copy.deepcopy(featimp_list))
-    summarize_imp_feat(featimp_list_list)
+
+    df_featimp_top = summarize_imp_feat(featimp_list_list)
+    df_featimp_top.to_csv(os.path.join("results", "Featimp.csv"), index=False)
+    feat_imp_plot = sns.barplot(data=df_featimp_top, x="imp", y="feat_name")
+    feat_imp_plot.get_figure().savefig(os.path.join(output_dir, "Feature_imp_MOGONET.png"))
     
